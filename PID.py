@@ -36,4 +36,22 @@ class controller:
 
         return output
 
-print("Hello, World!")
+def main():
+  robot1 = controller(1.5, 0.01, 0.1)
+  robot1.set_setpoint(100.0)
+  robot1.set_deadzone(0.01)
+  current_state = 0.0
+
+  for i in range(50):
+      error_before_step = robot1.setpoint - current_state
+      output = robot1.compute(current_state, dt=0.1)
+      current_state += output * 0.1
+
+      print(
+          f"Loop #{i} - Error: {error_before_step:.2f}  "
+          f"Output: {output:.2f}  State: {current_state:.2f}"
+      )
+
+
+if __name__ == "__main__":
+  main()
